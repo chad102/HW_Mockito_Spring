@@ -1,5 +1,6 @@
 package net.power.employeeBook.Departments;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
 import net.power.employeeBook.Employee;
 import net.power.employeeBook.EmployeeService;
 import net.power.employeeBook.EmployeeServiceImpl;
@@ -9,23 +10,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class DepartmentServiceImpl extends EmployeeServiceImpl {
+public class DepartmentService {
     private final EmployeeService employeeService;
 
-    public DepartmentServiceImpl(EmployeeService employeeService) {
+    public DepartmentService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
-    public Optional<Employee> getMaxSalaryInDep (int departmentId) {
-        return employeeService.printAllEmployees().values().stream()
+    public Employee getMaxSalaryInDep (int departmentId) {
+         return employeeService.printAllEmployees().values().stream()
                 .filter(e -> e.getDepartmentId() == departmentId)
-                .max(Comparator.comparingInt(Employee::getSalary));
+                .max(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(NullPointerException::new);
     }
 
-    public Optional<Employee> getMinSalaryInDep (int departmentId) {
+    public Employee getMinSalaryInDep (int departmentId) {
         return employeeService.printAllEmployees().values().stream()
                 .filter(e -> e.getDepartmentId() == departmentId)
-                .min(Comparator.comparingInt(Employee::getSalary));
+                .min(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(NullPointerException::new);
     }
 
     public List<Employee> printEmployeesInDep (int departmentId) {

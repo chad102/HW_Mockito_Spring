@@ -10,50 +10,37 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
-    private final DepartmentServiceImpl departmentServiceImpl;
-    public DepartmentController(DepartmentServiceImpl departmentServiceImpl) {
-        this.departmentServiceImpl = departmentServiceImpl;
-    }
-@GetMapping(path = "/max-salary")
-    public Optional<Employee> getMaxSalaryInDep(@RequestParam("departmentId") int departmentId) {
-        return departmentServiceImpl.getMaxSalaryInDep(departmentId);
-    }
-@GetMapping(path = "/min-salary")
-    public Optional<Employee> getMinSalaryInDep(@RequestParam("departmentId") int departmentId) {
-        return departmentServiceImpl.getMinSalaryInDep(departmentId);
+    private final DepartmentService departmentService;
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 @GetMapping(path = "/all")
     public List<Employee> printAllEmployeesInDep(@RequestParam("departmentId") int departmentId) {
-        return departmentServiceImpl.printEmployeesInDep(departmentId);
-    }
-
-@GetMapping(path = "/all1")
-    public List<Employee> printAllDeps() {
-        return departmentServiceImpl.printEmployeesAllDeps();
+        return departmentService.printEmployeesInDep(departmentId);
     }
 
 @GetMapping("/{departmentId}/employees")
     public List<Employee> getEmployeesInDep(@PathVariable("departmentId") int departmentId) {
-        return departmentServiceImpl.printEmployeesInDep(departmentId);
+        return departmentService.printEmployeesInDep(departmentId);
     }
 
 @GetMapping("/{departmentId}/salary/sum")
 public Integer getSumSalaryInDep(@PathVariable("departmentId") int departmentId) {
-    return departmentServiceImpl.getSumSalaryInDep(departmentId);
+    return departmentService.getSumSalaryInDep(departmentId);
 }
 
 @GetMapping("/{departmentId}/salary/max")
-    public Optional<Employee> getMaxSalaryInDepByNum(@PathVariable("departmentId") int departmentId) {
-        return departmentServiceImpl.getMaxSalaryInDep(departmentId);
+    public Employee getMaxSalaryInDepByNum(@PathVariable("departmentId") int departmentId) {
+        return departmentService.getMaxSalaryInDep(departmentId);
 }
 
 @GetMapping("/{departmentId}/salary/min")
-    public Optional<Employee> getMinSalaryInDepByNum(@PathVariable("departmentId") int departmentId) {
-        return departmentServiceImpl.getMinSalaryInDep(departmentId);
+    public Employee getMinSalaryInDepByNum(@PathVariable("departmentId") int departmentId) {
+        return departmentService.getMinSalaryInDep(departmentId);
 }
 
 @GetMapping("/employees")
     public Map<Integer,List<Employee>> getEmployeesByDep() {
-        return departmentServiceImpl.getEmployeesByDep();
+        return departmentService.getEmployeesByDep();
 }
 }
