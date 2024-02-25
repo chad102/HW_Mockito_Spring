@@ -2,6 +2,7 @@ package net.power.employeeBook.Departments;
 
 import net.power.employeeBook.Employee;
 import net.power.employeeBook.EmployeeService;
+import net.power.employeeBook.EmployeeServiceImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -71,7 +73,22 @@ class DepartmentServiceTest {
     }
 
     @Test
-    void printEmployeesInDep() {
+    void printEmployeesInDepTest1() {
+        int numOfDep = 4;
+        Employee employee = new Employee("cxvbn","hrndnd", numOfDep, 21324);
+        Map <String, Employee> expected = new HashMap<>();
+        expected.put(employee.getFirstName()+employee.getLastName(), employee);
+
+        when(employeeService.printAllEmployees()).thenReturn(expected);
+
+        List<Employee> expectedList = expected.values().stream().toList();
+        List<Employee> actual = out.printEmployeesInDep(numOfDep);
+        Assertions.assertEquals(expectedList, actual);
+    }
+
+    @Test
+    void printEmployeesInDepTest2() {
+
         List<Employee> expected = List.of();
         Assertions.assertEquals(expected, out.printEmployeesInDep(1));
     }

@@ -85,10 +85,9 @@ class EmployeeServiceImplTest {
         Employee addedEmployee = employeeServiceImpl.addNewEmployee("Иван", "Иванов", 1, 5000);
         employees.put(addedEmployee.getFirstName() + addedEmployee.getLastName(), addedEmployee);
 
-        Map<String, Employee> resultMap = employeeServiceImpl.printAllEmployees();
-        Map<String, Employee> expectedMap = employeeServiceImpl.employees;
+        Map<String, Employee> actualMap = employeeServiceImpl.printAllEmployees();
 
-        Assertions.assertEquals(expectedMap, resultMap);
+        Assertions.assertEquals(employees, actualMap);
     }
 
 }

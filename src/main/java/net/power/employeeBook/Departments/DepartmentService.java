@@ -37,10 +37,9 @@ public class DepartmentService {
                 .collect(Collectors.toList());
     }
 
-    List<Employee> printEmployeesAllDeps() {
+    Map<Integer, List<Employee>> printEmployeesAllDeps() {
         return employeeService.printAllEmployees().values().stream()
-                .sorted(Comparator.comparingInt(Employee::getDepartmentId))
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(Employee::getDepartmentId));
     }
 
     public Integer getSumSalaryInDep(int departmentId) {
